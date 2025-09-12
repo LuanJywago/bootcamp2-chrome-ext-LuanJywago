@@ -35,6 +35,6 @@ Instalação manual
 
 10. Para caso de dúvidas, estou a disposição.
 
-11. GitHubPages: 
+11. GitHubPages: https://luanjywago.github.io/bootcamp2-chrome-ext-LuanJywago/
    
 
