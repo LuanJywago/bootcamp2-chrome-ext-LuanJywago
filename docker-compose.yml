@@ -1,0 +1,28 @@
+# Define a versão do Docker Compose
+version: '3.8'
+
+# Define os serviços (containers) que vamos rodar
+services:
+
+  # --- Serviço 1: O Backend (API) ---
+  api:
+    # Diz ao Compose para construir a imagem usando o Dockerfile da pasta 'apps/api'
+    build: ./apps/api
+    # Mapeia a porta 3000 do container para a porta 3000 do seu computador
+    ports:
+      - "3000:3000"
+    # Dá um nome fácil de identificar para o container
+    container_name: bootcamp-api
+
+  # --- Serviço 2: O Frontend (PWA) ---
+  web:
+    # Constrói a imagem usando o Dockerfile da pasta 'apps/web'
+    build: ./apps/web
+    # Mapeia a porta 80 do container (Nginx) para a porta 8080 do seu computador
+    ports:
+      - "8080:80"
+    container_name: bootcamp-web
+    # 'depends_on' garante que o serviço 'api' seja iniciado ANTES do serviço 'web'
+    # Isso evita que o PWA tente se conectar a uma API que ainda não subiu
+    depends_on:
+      - api

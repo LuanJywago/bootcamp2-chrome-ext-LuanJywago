@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Consulta CEP</title>
+    
+    <meta name="theme-color" content="#007bff"/>
+
+    <link rel="manifest" href="manifest.webmanifest">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>PWA Consulta CEP</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Consulte um CEP (ViaCEP)</h2>
+            <input type="text" id="cep-input" placeholder="Digite 8 números do CEP">
+            <button id="search-btn">Buscar</button>
+            <div id="result">
+                </div>
+        </div>
+
+        <hr>
+
+        <div class="container">
+            <h2>Status da API Interna</h2>
+            <div id="api-status">
+                Verificando...
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(reg => console.log('Service Worker registrado!', reg))
+            .catch(err => console.log('Erro ao registrar Service Worker:', err));
+        });
+      }
+    </script>
+</body>
+</html>

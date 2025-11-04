@@ -1,0 +1,87 @@
+name: CI/CD do PWA
+
+on:
+  # Dispara o workflow em pushes ou PRs para a branch 'main'
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # --- passo 1: CONSTRUIR E TESTAR ---
+  build-test:
+    runs-on: ubuntu-latest # Roda em uma máquina virtual Linux
+
+    steps:
+      # 1. Baixa o seu código do repositório dee origem q mandei
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # 2. Configura o Node.js para a API criada, não sendo nenuhma pública
+      - name: Setup Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. Instala dependências da API
+      - name: Instalar dependências da API (apps/api)
+        run: cd apps/api && npm ci
+
+      # 4. Roda testes da API
+      - name: Rodar testes da API
+        run: cd apps/api && npm test --if-present
+
+      # 5. Roda os nossos testes E2E (Playwright)
+      - name: Rodar testes Playwright (mock)
+        
+        
+        run: echo "Etapa de testes E2E (Playwright) a ser configurada"
+
+      # 6. Salva os arquivos do PWA (apps/web) como um "artefato"
+      #    para o próximo job (deploy) poder usar.
+      - name: Upload do artefato do PWA
+        uses: actions/upload-artifact@v4
+        with:
+          name: pwa-build
+          path: apps/web 
+
+  # --- JOB 2: DEPLOY NO GITHUB PAGES ---
+  deploy-pages:
+
+    needs: build-test 
+    
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    # Define o ambiente de "pages"
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Configura o GitHub Pages
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v4
+
+      # 2. Baixa o artefato (pwa-build) que o job anterior salvou
+      - name: Download do artefato do PWA
+        uses: actions/download-artifact@v4
+        with:
+          name: pwa-build
+          path: . # Baixa para a raiz
+
+      # 3. Faz o upload dos arquivos para o GitHub Pages
+      - name: Upload para o GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: . # Faz upload dos arquivos que acabamos de baixar
+
+      # 4. Publica o site!
+      - name: Deploy no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
