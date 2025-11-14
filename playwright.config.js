@@ -14,7 +14,7 @@ export default defineConfig({
   // Configurações para rodar no CI (GitHub Actions)
   webServer: {
     // Comando para ligar o PWA e a API
-    command: 'docker-compose up --build', 
+    command: 'docker compose up --build', 
     url: 'http://localhost:8080',
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
