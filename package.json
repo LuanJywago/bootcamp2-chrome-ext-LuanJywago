@@ -1,0 +1,28 @@
+{
+  "name": "bootcamp2-chrome-ext-luanjywago",
+  "version": "1.0.0",
+  "description": "Extensão do google em CSS, HTML e JS para projeto inicial da faculdade",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuanJywago/bootcamp2-chrome-ext-LuanJywago.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LuanJywago/bootcamp2-chrome-ext-LuanJywago/issues"
+  },
+  "homepage": "https://github.com/LuanJywago/bootcamp2-chrome-ext-LuanJywago#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "playwright": "^1.56.1"
+  }
+}
