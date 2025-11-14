@@ -7,6 +7,8 @@ const ASSETS_TO_CACHE = [
   '/style.css',
   '/script.js',
   '/manifest.webmanifest',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png'
 ];
 
 // Evento 'install': Salva os assets no cache
